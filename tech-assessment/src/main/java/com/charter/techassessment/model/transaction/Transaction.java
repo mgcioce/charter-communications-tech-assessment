@@ -2,20 +2,19 @@ package com.charter.techassessment.model.transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Transaction {
 
     private Long transactionId;
     private BigDecimal amount;
     private LocalDate transactionDate;
-    private Long customerId;
 
-    public Transaction(Long transactionId, BigDecimal amount, Long customerId, LocalDate transactionDate) {
+    private Boolean valid;
+
+    public Transaction(Long transactionId, BigDecimal amount, LocalDate transactionDate) {
         this.transactionId = transactionId;
         this.amount = amount;
         this.transactionDate = transactionDate;
-        this.customerId = customerId;
     }
 
     public Long getTransactionId() {
@@ -42,11 +41,11 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Boolean getValid() {
+        return valid;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 }
