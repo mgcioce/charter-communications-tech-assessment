@@ -47,7 +47,8 @@ public class RewardsCalculation {
 
     public void calculateTotalPoints(){
         BigInteger sum = new BigInteger("0");
-        this.monthlyPointsMap.entrySet().stream().forEach((entry) -> sum.add(entry.getValue()));
+        for(Map.Entry<Month,BigInteger> entry: this.monthlyPointsMap.entrySet())
+            sum = sum.add(entry.getValue());
         this.total = sum;
     }
 

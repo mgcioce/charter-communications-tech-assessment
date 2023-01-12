@@ -31,6 +31,8 @@ public class RewardsPointsServiceImpl implements RewardsPointsService{
                 if(monthlyPointsMap.containsKey(trxMonth)){
                     points = points.add(monthlyPointsMap.get(trxMonth));
                     monthlyPointsMap.put(trxMonth,points);
+                } else {
+                    monthlyPointsMap.put(trxMonth,points);
                 }
             }
         }
@@ -44,10 +46,10 @@ public class RewardsPointsServiceImpl implements RewardsPointsService{
         if(REWARDS_POINTS_LOWER_THRESHOLD.compareTo(transactionAmount) >= 0) //amount isn't greater than 50, so return 0
             return rewardsPoints;
         if(REWARDS_POINTS_DOUBLE_POINTS_THRESHOLD.compareTo(transactionAmount) < 0){ //amount is greater than 100, so return 50 + 2*(amount - 100)
-            rewardsPoints.add(REWARDS_POINTS_LOWER_THRESHOLD);
-            rewardsPoints.add(transactionAmount.subtract(REWARDS_POINTS_DOUBLE_POINTS_THRESHOLD).multiply(REWARDS_POINTS_MULTIPLIER));
+            rewardsPoints = rewardsPoints.add(REWARDS_POINTS_LOWER_THRESHOLD);
+            rewardsPoints = rewardsPoints.add(transactionAmount.subtract(REWARDS_POINTS_DOUBLE_POINTS_THRESHOLD).multiply(REWARDS_POINTS_MULTIPLIER));
         } else { //amount is less than or equal to 100 and greater than 50, so return amount - 50
-            rewardsPoints.add(transactionAmount.subtract(REWARDS_POINTS_LOWER_THRESHOLD));
+            rewardsPoints = rewardsPoints.add(transactionAmount.subtract(REWARDS_POINTS_LOWER_THRESHOLD));
         }
         return rewardsPoints;
     }

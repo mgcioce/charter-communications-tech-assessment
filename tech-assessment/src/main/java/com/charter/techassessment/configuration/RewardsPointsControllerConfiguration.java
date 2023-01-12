@@ -27,12 +27,6 @@ public class RewardsPointsControllerConfiguration {
     }
 
     @Bean
-    @Scope("singleton")
-    public RewardsPointsController rewardPointsController(RewardsPointsService rewardsPointsService) {
-        return new RewardsPointsController(rewardsPointsService);
-    }
-
-    @Bean
     public TransactionSanitizer transactionSanitizer() {
         return new TransactionSanitizer();
     }

@@ -15,7 +15,7 @@ public class TransactionSanitizer {
     public  List<Transaction> sanitizeTransactions(List<Transaction> transactions) {
         Boolean atLeastOneValid = Boolean.FALSE;
         if(transactions == null || transactions.isEmpty())
-            throw new RuntimeException("empty request payload");
+            throw new IllegalArgumentException("empty request payload");
         List<Transaction> returnList = new ArrayList<>();
         for(Transaction trx: transactions){
             if( trx != null && transactionIdIsSanitized(trx.getTransactionId())
@@ -30,7 +30,7 @@ public class TransactionSanitizer {
         if(atLeastOneValid)
             return returnList;
         else
-            throw new RuntimeException("no valid transactions");
+            throw new IllegalArgumentException("no valid transactions");
     }
 
     protected boolean transactionIdIsSanitized(Long id){
