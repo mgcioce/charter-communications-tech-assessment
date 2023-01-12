@@ -12,7 +12,8 @@ public class TransactionSanitizer {
     public static final Long ZEROINT = 0L;
     public static final BigDecimal ZERO_DOUBLE= new BigDecimal(0.0);
 
-    public static List<Transaction> sanitizeTransactions(List<Transaction> transactions) {
+    public  List<Transaction> sanitizeTransactions(List<Transaction> transactions) {
+        Boolean atLeastOneValid = Boolean.FALSE;
         if(transactions == null || transactions.isEmpty())
             throw new RuntimeException("empty request payload");
         List<Transaction> returnList = new ArrayList<>();
@@ -21,22 +22,26 @@ public class TransactionSanitizer {
                             && transactionAmountIsSanitized(trx.getAmount())
                             && transactionDateIsSanitized(trx.getTransactionDate())){
                 trx.setValid(Boolean.TRUE);
+                atLeastOneValid = Boolean.TRUE;
             } else
                 trx.setValid(Boolean.FALSE);
             returnList.add(trx);
         }
-        return returnList;
+        if(atLeastOneValid)
+            return returnList;
+        else
+            throw new RuntimeException("no valid transactions");
     }
 
-    protected static boolean transactionIdIsSanitized(Long id){
+    protected boolean transactionIdIsSanitized(Long id){
         return (id == null || ZEROINT.compareTo(id) >= 0) ? false : true;
     }
 
-    protected static boolean transactionAmountIsSanitized(BigDecimal amount){
+    protected boolean transactionAmountIsSanitized(BigDecimal amount){
         return (amount == null || ZERO_DOUBLE.compareTo(amount) >= 0) ? false : true;
     }
 
-    protected static boolean transactionDateIsSanitized(LocalDate date) {
+    protected boolean transactionDateIsSanitized(LocalDate date) {
         return (date == null || date.isAfter(LocalDate.now())) ? false : true;
     }
 
